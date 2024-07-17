@@ -1,9 +1,11 @@
 'use client';
-import { AppShell, Burger, Group, NavLink } from '@mantine/core';
+import { useState, useEffect  } from 'react';
+import { AppShell, Divider, Burger, Group, NavLink, Switch, useMantineColorScheme, Space, Center } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import Link from 'next/link';
 import { AiFillLayout } from "react-icons/ai";
 import { BsFillBarChartLineFill, BsFillBriefcaseFill, BsFillGridFill, BsFillPersonFill } from "react-icons/bs";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { LuMoonStar } from "react-icons/lu";
 
 export default function DashboardLayout({
     children
@@ -11,6 +13,12 @@ export default function DashboardLayout({
     children: React.ReactNode
   }>) {
     const [opened, { toggle }] = useDisclosure();
+    const {colorScheme, toggleColorScheme} = useMantineColorScheme();
+
+    const [isChecked, setIsChecked] = useState(false)
+    useEffect(()=>{
+        setIsChecked(colorScheme === 'dark')
+    }, [colorScheme])
 
     return (
     <AppShell
@@ -37,26 +45,23 @@ export default function DashboardLayout({
         </AppShell.Header>
 
         <AppShell.Navbar p="md">
-            <Link href={"./home"}>
                 <NavLink 
+                    href="./home"
                     label="Dashboard"
                     leftSection={<AiFillLayout  />}
                 ></NavLink>
-            </Link>
-            <Link href={"./projects"}>
                 <NavLink 
+                    href={"./projects"}
                     label="Projects"
                     leftSection={<BsFillGridFill />}
                 ></NavLink>
-            </Link>
-            <Link href={"./organization"}>
                 <NavLink 
+                    href={"./organization"}
                     label="Organization"
                     leftSection={<BsFillBriefcaseFill />}
                 ></NavLink>
-            </Link>
-            <Link href={"./account"}>
                 <NavLink 
+                    href={"./account"}
                     label="Account"
                     leftSection={<BsFillPersonFill />}
                 >
@@ -67,7 +72,27 @@ export default function DashboardLayout({
                         label="Sign Out"
                     ></NavLink>
                 </NavLink>
-            </Link>
+
+                <div className='flex-1'></div>
+                <Divider />
+                <Space h="md"/>
+                <Center>
+                    <div>
+                        <p className='text-xs text-center'>Theme</p>
+                        <Switch
+                            size="md" 
+                            color="dark.4"
+                            onLabel={<MdOutlineWbSunny className='text-base'/>} 
+                            offLabel={<LuMoonStar className='text-base'/>}
+                            onClick={toggleColorScheme}
+                            checked={isChecked} 
+                        />
+                    </div>
+                </Center>
+                <Space h="md"/>
+                <p className='text-xs text-center'>
+                    About Us &bull; Copyright 2024
+                </p>
         </AppShell.Navbar>
 
         <AppShell.Main>
