@@ -56,12 +56,10 @@ export default function DashboardLayout({
                     leftSection={<BsFillGridFill />}
                 ></NavLink>
                 <NavLink 
-                    href={"./organization"}
                     label="Organization"
                     leftSection={<BsFillBriefcaseFill />}
                 ></NavLink>
                 <NavLink 
-                    href={"./account"}
                     label="Account"
                     leftSection={<BsFillPersonFill />}
                 >

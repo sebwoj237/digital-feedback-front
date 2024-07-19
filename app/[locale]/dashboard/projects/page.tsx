@@ -1,60 +1,79 @@
 'use client'
-import { Spoiler, Indicator, Pagination, Tabs, Card, BackgroundImage, Text, Badge, Button, Group, SimpleGrid, ActionIcon, Center } from '@mantine/core';
+import { Affix, Spoiler, Indicator, Pagination, Tabs, Card, BackgroundImage, Text, Badge, Button, Group, SimpleGrid, ActionIcon, Center } from '@mantine/core';
 import { useState } from 'react';
 import { FaCog, FaBug, FaArchive } from "react-icons/fa";
 import { SiTask } from "react-icons/si";
 import { TiUser } from "react-icons/ti";
 import { AiOutlineForm } from "react-icons/ai";
+import { IoMdLock } from "react-icons/io";
+import { IoAdd } from "react-icons/io5";
+import { MdOutlinePublic } from "react-icons/md";
+import { Project, ProjectStatus, statusColors, ProjectDefaults, exampleProjects} from "./ProjectType"
 
-function ProjectCard(props: {
-    title: string
+
+export function ProjectCard(props: {
+    project: Project
 }) {
-
+    const p = {
+        ...ProjectDefaults,
+        ...props.project
+    }
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section>
                 <BackgroundImage
                 className='flex'
-                src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
+                src={p.imageUrl}
                 h={96}
                 >
                     <div className='flex'>
-                        <Badge className='ml-auto' mt="sm" mr="sm" color="pink">Issue</Badge>
+                        <Badge className='ml-auto' mt="sm" mr="sm" color={statusColors[p.status]}>
+                            <Group gap={4}>
+                            {p.status}
+                            {
+                                p.status === ProjectStatus.Private
+                                ? <IoMdLock />
+                                : p.status === ProjectStatus.Public
+                                ? <MdOutlinePublic  />
+                                : <FaArchive />
+                            }
+                            
+                            </Group>
+                        </Badge>
                     </div>
                 </BackgroundImage>
             </Card.Section>
 
-            <Text mt="md" fw={500}>{props.title} Norway Fjord Adventures</Text>
+            <Text mt="md" fw={500}>{p.title}</Text>
             <Group justify="left" my="xs">
                 <Text component='div' size="xs" c="dimmed">
-                    <Group gap="xs">
-                        <TiUser />10 Members
+                    <Group gap={4}>
+                        <TiUser />{p.members} Members
                     </Group>
                 </Text>
                 <Text component='div' size="xs" c="dimmed">
-                    <Group gap="xs">
-                        <AiOutlineForm />3 Forms
+                    <Group gap={4}>
+                        <AiOutlineForm />{p.forms} Forms
                     </Group>
                 </Text>
             </Group>
 
             <Spoiler maxHeight={40} showLabel={<Text size='sm'>Read More</Text>} hideLabel={<Text size='sm'>Hide</Text>}>
-                <Text size="sm" c="dimmed">
-                    With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                    activities on and around the fjords of Norway
+                <Text size="sm" c="dimmed" className='text-justify'>
+                    {p.description}
                 </Text>
             </Spoiler>
 
             <Group gap="xs" mt="sm">
                 <Indicator disabled color="blue" radius="xl" label={10} size={16}>
-                    <Button variant='outline' color="blue">
+                    <Button variant='outline' color="blue" component='a' href={`./projects/${p.id}`}>
                         View
                     </Button>
                 </Indicator>
                 <ActionIcon variant="outline" color="gray">
                     <FaCog />
                 </ActionIcon>
-                <Indicator color="red" radius="xl" label={10} size={16}>
+                <Indicator color="red" radius="xl" label={p.bugs} size={16} disabled={p.bugs===0}>
                     <ActionIcon variant="outline" color="red">
                         <FaBug />
                     </ActionIcon>
@@ -66,8 +85,8 @@ function ProjectCard(props: {
 
 export default function Projects() {
     const projects = {
-        open: Array.from("abcdefghijklmnopqrstuw"),
-        archived: Array.from("xyz")
+        open: exampleProjects.filter((p)=>p.status!==ProjectStatus.Archived),
+        archived: exampleProjects.filter((p)=>p.status===ProjectStatus.Archived)
     }
 
     const pageSize = 8
@@ -75,14 +94,14 @@ export default function Projects() {
     const [pages, setPages] = useState(calculatePages(projects.open))
     const [tab, setTab] = useState("open")
 
-    function getPageElements(array: string[]) {
+    function getPageElements(array: Project[]) {
         const start = (page-1)*pageSize
         let end = start + pageSize
         if (end > array.length) { end = array.length }
         return array.slice(start, end)
     }
 
-    function calculatePages(array: string[]) {
+    function calculatePages(array: Project[]) {
         let newPages = Math.ceil(array.length / 8)
         if (newPages < 1) { newPages = 1 }
         return newPages
@@ -118,8 +137,8 @@ export default function Projects() {
                         cols={{ base: 1, sm: 2, lg: 4 }}
                     >
                     {
-                        getPageElements(projects.open).map((val)=>{
-                            return <ProjectCard title={val}/>
+                        getPageElements(projects.open).map((p)=>{
+                            return <ProjectCard project={p}/>
                         })
                     }
                     </SimpleGrid>
@@ -129,8 +148,8 @@ export default function Projects() {
                         cols={{ base: 1, sm: 2, lg: 4 }}
                     >
                         {
-                            getPageElements(projects.archived).map((val)=>{
-                                return <ProjectCard title={val}/>
+                            getPageElements(projects.archived).map((p)=>{
+                                return <ProjectCard project={p}/>
                             })
                         }
                     </SimpleGrid>
@@ -139,6 +158,11 @@ export default function Projects() {
             <Center>
             <Pagination value={page} onChange={handlePageChange} total={pages} color="gray" mt="sm"/>
             </Center>
+            <Affix position={{ bottom: 20, right: 20 }}>
+            <ActionIcon variant="filled" size={64} radius={64} aria-label="Settings">
+                <IoAdd size={32}/>
+            </ActionIcon>
+            </Affix>
         </div>
     )
 }
