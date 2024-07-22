@@ -14,6 +14,7 @@ import {
   ResetPasswordFormFields,
   resetPasswordSchema,
 } from '@/api/public/auth/resetPassword'
+import { Logo } from '@/components/common/Logo'
 
 export const ResetPasswordCard = () => {
   const { t } = useTranslation()
@@ -52,7 +53,7 @@ export const ResetPasswordCard = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Link href="/" className="mx-auto text-3xl font-medium">
-            Next 14
+          <Logo />
           </Link>
           {token && userId && !isError ? (
             <>

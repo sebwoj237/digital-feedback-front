@@ -1,4 +1,5 @@
 'use client'
+import { Logo } from '@/components/common/Logo'
 import { nprogress } from '@mantine/nprogress'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -13,7 +14,7 @@ export const TopNavigation = () => {
     <div className="">
       <div className="max-w-screen-2xl mx-auto flex justify-between items-center p-5">
         <div className="flex items-center">
-          <h1>NEXT14</h1>
+          <h1><Logo /></h1>
         </div>
         <div className="relative">
           <button
@@ -25,16 +26,19 @@ export const TopNavigation = () => {
           <div
             className={`${
               menuOpen ? 'flex' : 'hidden md:flex'
-            } flex-col md:flex-row absolute md:static right-0 top-full items-center gap-8 shadow-xl md:shadow-none p-3 md:p-0 bg-white rounded-lg w-max z-20`}
+            } flex-col md:flex-row absolute md:static right-0 top-full items-center gap-8 shadow-xl md:shadow-none p-3 md:p-0 rounded-lg w-max z-20`}
           >
-            <Link href="/public/tab" className="hover:text-primary">
-              Tab
+            <Link href="./" className="hover:text-primary">
+              Home
             </Link>
-            <Link href="/public/tab" className="hover:text-primary">
-              Tab
+            <Link href="/dashboard" className="hover:text-primary">
+              Dashboard
             </Link>
-            <Link href="/public/tab" className="hover:text-primary">
-              Tab
+            <Link href="./" className="hover:text-primary">
+              About Us
+            </Link>
+            <Link href="./" className="hover:text-primary">
+              Contact
             </Link>
             <Link
               href="/auth/sign-in"

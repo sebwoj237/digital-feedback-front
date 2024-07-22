@@ -20,6 +20,8 @@ import { InputText } from '@/components/common/form/InputText'
 import { FormProvider } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 
+import { Logo } from '@/components/common/Logo'
+
 export const SignUpCard = () => {
   const { t } = useTranslation()
   const router = useRouter()
@@ -55,14 +57,14 @@ export const SignUpCard = () => {
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Link href="/" className="mx-auto text-3xl font-medium">
-            Next 14
+            <Logo />
           </Link>
           <span className="font-medium text-gray-500">
             {t('common:selectAccountType')}
           </span>
           <div className="flex gap-4 justify-evenly">
             <button
-              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${asStudent ? 'bg-primary text-white hover:bg-primary-hover' : 'bg-gray-100 hover:bg-gray-200 text-gray-500'}`}
+              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${asStudent ? 'bg-primary text-white hover:bg-primary-hover' : ''}`}
               onClick={() => methods.setValue('asStudent', true)}
             >
               <PiStudentFill
@@ -72,7 +74,7 @@ export const SignUpCard = () => {
               {t('common:student')}
             </button>
             <button
-              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${!asStudent ? 'bg-primary text-white hover:bg-primary-hover' : 'bg-gray-100 hover:bg-gray-200 text-gray-500'}`}
+              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${!asStudent ? 'bg-primary text-white hover:bg-primary-hover' : ''}`}
               onClick={() => methods.setValue('asStudent', false)}
             >
               <VscOrganization
@@ -116,7 +118,7 @@ export const SignUpCard = () => {
           >
             {t('common:signUp')}
           </Button>
-          <div className="flex items-center w-full gap-3">
+          {/* <div className="flex items-center w-full gap-3">
             <div className="h-[1px] bg-slate-200 flex-1"></div>
             <div className="text-gray-500">{t('common:or')}</div>
             <div className="h-[1px] bg-slate-200 flex-1"></div>
@@ -155,7 +157,7 @@ export const SignUpCard = () => {
               iconSize={20}
               iconColor="#1877f2"
             />
-          </div>
+          </div> */}
           <span className="text-center">
             {t('common:accountExistsDesc')}{' '}
             <Link href="/auth/sign-in" className="text-primary font-bold">

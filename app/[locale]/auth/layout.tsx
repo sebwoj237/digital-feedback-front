@@ -8,7 +8,7 @@ export default async function AuthLayout({
   children: React.ReactNode
 }>) {
   return (
-    <main className="bg-slate-200 h-full flex justify-center items-center relative">
+    <main className="h-full flex justify-center items-center relative">
       {children}
     </main>
   )

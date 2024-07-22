@@ -7,6 +7,7 @@ import { BsFillBarChartLineFill, BsFillBriefcaseFill, BsFillGridFill, BsFillPers
 import { MdOutlineWbSunny } from "react-icons/md";
 import { LuMoonStar } from "react-icons/lu";
 import { IoMdNotifications } from "react-icons/io";
+import { Logo } from '@/components/common/Logo';
 
 export default function DashboardLayout({
     children
@@ -40,10 +41,7 @@ export default function DashboardLayout({
                     hiddenFrom="sm"
                     size="sm"
                 />
-                <div>
-                <span>Digital Feedback</span>
-                <span className="text-xs tracking-tighter align-bottom"> App</span>
-                </div>
+                <Logo />
                 <div className='flex-1'></div>
                 <ActionIcon onClick={toggleNotifications} variant="transparent" color="gray" size="lg" aria-label="Settings">
                     <IoMdNotifications size="lg"/>

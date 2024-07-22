@@ -13,6 +13,7 @@ import {
   sendResetPasswordEmailSchema,
 } from '@/api/public/auth/forgotPassword'
 import { useSearchParams } from 'next/navigation'
+import { Logo } from '@/components/common/Logo'
 
 export const ForgotPasswordCard = () => {
   const { t } = useTranslation()
@@ -45,7 +46,7 @@ export const ForgotPasswordCard = () => {
       className="w-[40rem] max-w-[90%] flex flex-col gap-5"
     >
       <Link href="/" className="mx-auto text-3xl font-medium">
-        Next 14
+      <Logo />
       </Link>
       <p className="text-base text-center">{t('common:forgotPasswordDesc')}</p>
       <FormProvider {...methods}>
