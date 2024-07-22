@@ -46,12 +46,12 @@ export default function DashboardLayout({
 
         <AppShell.Navbar p="md">
                 <NavLink 
-                    href="./home"
+                    href="/dashboard"
                     label="Dashboard"
                     leftSection={<AiFillLayout  />}
                 ></NavLink>
                 <NavLink 
-                    href={"./projects"}
+                    href={"/dashboard/projects"}
                     label="Projects"
                     leftSection={<BsFillGridFill />}
                 ></NavLink>

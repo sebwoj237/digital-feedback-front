@@ -1,9 +1,10 @@
+'use client'
 import { Button, Group } from "@mantine/core"
-import { Project, ProjectStatus, statusColors, ProjectDefaults, exampleProjects} from "../ProjectType"
-import { ProjectCard } from "../page"
-import { IoIosArrowBack  } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io"
+import { exampleProjects } from "@/types/ProjectType"
+import { ProjectPage } from "@/components/public/ProjectPage"
 
-export default function ProjectPage({params: {id}}: Readonly<{params: {id: number}}>) {
+export default function ProjectDashboardPage({params: {id}}: Readonly<{params: {id: number}}>) {
     const p = exampleProjects[exampleProjects.findIndex((p)=>p.id == id)]
 
     return (
@@ -14,7 +15,7 @@ export default function ProjectPage({params: {id}}: Readonly<{params: {id: numbe
                     Back
                 </Group>
             </Button>
-            <ProjectCard project={p}/>
+            <ProjectPage project={p} public={false}></ProjectPage>
         </div>
     )
 }
