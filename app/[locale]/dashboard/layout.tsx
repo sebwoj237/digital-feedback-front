@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect  } from 'react';
-import { AppShell, Divider, Burger, Group, NavLink, Switch, useMantineColorScheme, Space, Center } from '@mantine/core';
+import { Drawer, ActionIcon, AppShell, Divider, Burger, Group, NavLink, Switch, useMantineColorScheme, Space, Center } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { AiFillLayout } from "react-icons/ai";
 import { BsFillBarChartLineFill, BsFillBriefcaseFill, BsFillGridFill, BsFillPersonFill } from "react-icons/bs";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { LuMoonStar } from "react-icons/lu";
+import { IoMdNotifications } from "react-icons/io";
 
 export default function DashboardLayout({
     children
@@ -15,6 +16,7 @@ export default function DashboardLayout({
     const [opened, { toggle }] = useDisclosure();
     const {colorScheme, toggleColorScheme} = useMantineColorScheme();
 
+    const [openedNotifications, { toggle: toggleNotifications, close: closeNotifications }] = useDisclosure(false);
     const [isChecked, setIsChecked] = useState(false)
     useEffect(()=>{
         setIsChecked(colorScheme === 'dark')
@@ -39,8 +41,13 @@ export default function DashboardLayout({
                     size="sm"
                 />
                 <div>
-                <span>Digital Feedback</span><span className="text-xs tracking-tighter align-bottom"> App</span>
+                <span>Digital Feedback</span>
+                <span className="text-xs tracking-tighter align-bottom"> App</span>
                 </div>
+                <div className='flex-1'></div>
+                <ActionIcon onClick={toggleNotifications} variant="transparent" color="gray" size="lg" aria-label="Settings">
+                    <IoMdNotifications size="lg"/>
+                </ActionIcon>
             </Group>
         </AppShell.Header>
 
@@ -96,6 +103,9 @@ export default function DashboardLayout({
         <AppShell.Main>
             {children}
         </AppShell.Main>
+        <Drawer opened={openedNotifications} onClose={closeNotifications} title={<Group gap={4}><IoMdNotifications size="2rem"/><span>Notifications</span></Group>} position='right'>
+            {/* Drawer content */}
+        </Drawer>
     </AppShell>
   );
 }
