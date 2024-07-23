@@ -1,9 +1,13 @@
 'use client'
+import { useGetData } from '@/api/public/get/getData'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 export const Hero = () => {
   const { t } = useTranslation()
+  const {data} = useGetData()
+  console.log(data);
+  
   return (
     <div className="flex flex-col md:flex-row h-[calc(100vh-76px)]">
       <div className="flex-1 flex justify-center items-center p-2 relative">
