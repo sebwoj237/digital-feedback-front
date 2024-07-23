@@ -9,11 +9,8 @@ export default function ProjectDashboardPage({params: {id}}: Readonly<{params: {
 
     return (
         <div>
-            <Button variant="outline" color="gray" mb="sm" component="a" href="./">
-                <Group justify="space-between" gap={4}>
-                    <IoIosArrowBack  />
+            <Button leftSection={<IoIosArrowBack  />} variant="outline" color="gray" mb="sm" component="a" href="./">
                     Back
-                </Group>
             </Button>
             <ProjectPage project={p} public={false}></ProjectPage>
         </div>

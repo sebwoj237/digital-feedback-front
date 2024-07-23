@@ -13,14 +13,36 @@ import { Bug } from "@/types/BugType"
 import { ProjectFormItem } from "@/components/public/ProjectFormItem";
 import { usePages } from "@/hooks/usePages";
 
+import { useGetBugs } from "@/api/public/project/getBugs";
+import { useEffect, useState } from "react";
+import { debugPort, title } from "process";
+import { describe } from "node:test";
+
 export function ProjectPage(props: {
     project: Project,
     public: boolean
 }) {
-    const p = props.project
+    const [p, setProject] = useState(props.project)
     const isPublic = props.public
 
-    const {pageElements: pageElementsBugs, page: pageBugs, pagesTotal: pagesTotalBugs, handlePageChange: handlePageChangeBugs} = usePages(p.bugs, 3)
+    const {data} = useGetBugs(p.id)
+
+    useEffect(()=>{
+        var newBugs: Bug[] = []
+        data?.forEach(d => {
+            newBugs.push({
+                id: d.id,
+                title: d.name,
+                description: d.body,
+                upvotes: d.postId + d.id
+            })
+        });
+        setArrayBugs(newBugs)
+        setProject({...p, bugs: newBugs})
+    }, [data])
+    
+
+    const {setArray: setArrayBugs, pageElements: pageElementsBugs, page: pageBugs, pagesTotal: pagesTotalBugs, handlePageChange: handlePageChangeBugs} = usePages(p.bugs, 3)
     const {pageElements: pageElementsForms, page: pageForms, pagesTotal: pagesTotalForms, handlePageChange: handlePageChangeForms} = usePages(p.forms, 4)
 
     return (
@@ -71,7 +93,7 @@ export function ProjectPage(props: {
                         <Card withBorder mt="md">
                             <Group justify="space-between" mb="md">
                                 <Text fw={800}>Known Issues ({p.bugs.length})</Text>
-                                <Button variant="outline" color="gray">
+                                <Button variant="outline" color="gray" component="a" href={location.origin + `/project/${p.id}/report?returnto=${encodeURIComponent(location.href)}`}>
                                     Report a bug
                                 </Button>
                             </Group>
@@ -95,7 +117,7 @@ export function ProjectPage(props: {
                         >
                             <Text fw={800} p="sm" className="text-center">Quick Actions</Text>
                             <Divider />
-                            <CopyButton value="https://mantine.dev" >
+                            <CopyButton value={location.origin + `/project/${p.id}`} >
                                 {({ copied, copy }) => (
                                     <NavLink p="sm"
                                         label="Share by URL"
