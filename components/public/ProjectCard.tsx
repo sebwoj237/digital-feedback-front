@@ -58,7 +58,7 @@ export function ProjectCard(props: {
 
             <Group gap="xs" mt="sm">
                 <Indicator disabled color="blue" radius="xl" label={10} size={16}>
-                    <Button variant='outline' color="blue" component='a' href={`./projects/${p.id}`}>
+                    <Button variant='outline' color="blue" component='a' href={`/dashboard/projects/${p.id}`}>
                         View
                     </Button>
                 </Indicator>

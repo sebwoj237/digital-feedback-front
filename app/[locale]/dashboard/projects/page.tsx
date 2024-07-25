@@ -53,7 +53,7 @@ export default function Projects() {
             <Pagination value={page} onChange={handlePageChange} total={pagesTotal} color="gray" mt="sm"/>
             </Center>
             <Affix position={{ bottom: 20, right: 20 }}>
-            <ActionIcon variant="filled" size={64} radius={64} aria-label="Settings">
+            <ActionIcon variant="filled" size={64} radius={64} component='a' href='/dashboard/projects/new'>
                 <IoAdd size={32}/>
             </ActionIcon>
             </Affix>

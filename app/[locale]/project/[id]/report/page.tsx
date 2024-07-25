@@ -6,6 +6,8 @@ import { useState, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
+import { useRedirect } from "@/hooks/useRedirect"
+
 export default function ReportBugPage({params: {id}}: Readonly<{params: {id: number}}>) {
   const p = exampleProjects[exampleProjects.findIndex((p)=>p.id == id)]
   const urlParams = useSearchParams()
@@ -13,6 +15,8 @@ export default function ReportBugPage({params: {id}}: Readonly<{params: {id: num
 
   const [isSent, setSentState] = useState(false)
   const overlay = useRef<HTMLDivElement>(null)
+  const backHref = returnUrl ?? "./"
+  const redirectBack = useRedirect(backHref, -1)
 
   return (
     <div>
@@ -68,6 +72,9 @@ export default function ReportBugPage({params: {id}}: Readonly<{params: {id: num
               />
             </Input.Wrapper>
             <Group mt="md" wrap="nowrap">
+              <Button leftSection={<IoIosArrowBack  />} w={128} variant="outline" color="gray" component="a" href={backHref}>
+                    Back
+              </Button>
               <Button fullWidth variant='filled' color="blue" 
                 onClick={()=>{
                   setSentState(true)
@@ -76,15 +83,13 @@ export default function ReportBugPage({params: {id}}: Readonly<{params: {id: num
                       overlay.current.style.opacity = "1"
                     }
                   }, 10)
+                  redirectBack(2000)
                 }}
               >
                   Submit a Report
               </Button>
-              <Button leftSection={<IoIosArrowBack  />} w={128} variant="outline" color="gray" component="a" href={returnUrl ?? "./"}>
-                    Back
-              </Button>
             </Group>
-            {isSent && <Overlay ref={overlay} color="#0f0" backgroundOpacity={0.5} style={{opacity: 0, transition: "all 0.2s ease-in-out"}}>
+            {isSent && <Overlay ref={overlay} color="#40c057" backgroundOpacity={0.5} style={{opacity: 0, transition: "all 0.2s ease-in-out"}}>
             <Flex
               justify="center"
               align="center"

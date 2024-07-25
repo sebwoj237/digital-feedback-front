@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect  } from 'react';
-import { Drawer, ActionIcon, AppShell, Divider, Burger, Group, NavLink, Switch, useMantineColorScheme, Space, Center } from '@mantine/core';
+import { Stack, Text, Drawer, ActionIcon, AppShell, Divider, Burger, Group, NavLink, Switch, useMantineColorScheme, Space, Center } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { AiFillLayout } from "react-icons/ai";
 import { BsFillBarChartLineFill, BsFillBriefcaseFill, BsFillGridFill, BsFillPersonFill } from "react-icons/bs";
@@ -102,7 +102,10 @@ export default function DashboardLayout({
             {children}
         </AppShell.Main>
         <Drawer opened={openedNotifications} onClose={closeNotifications} title={<Group gap={4}><IoMdNotifications size="2rem"/><span>Notifications</span></Group>} position='right'>
-            {/* Drawer content */}
+            <Divider mb="md" />
+            <Text c="dimmed" className='text-center'>
+            There is nothing to see. . .
+            </Text>          
         </Drawer>
     </AppShell>
   );

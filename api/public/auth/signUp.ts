@@ -4,19 +4,15 @@ import { z } from 'zod'
 
 export const signUpSchema = z.object({
   email: requiredEmail,
+  username: requiredString,
   password: requiredString,
-  confirmPassword: requiredString,
-  asStudent: z.boolean().default(true),
+  confirmPassword: requiredString
 })
 
 export type SignUpFormFields = z.infer<typeof signUpSchema>
 
 export type SignUpResponse = {
-  accessToken: string
-  createdOrganizationId: string
-  email: string
   id: string
-  roles: string[]
 }
 
 export const signUp = (
@@ -24,7 +20,7 @@ export const signUp = (
 ): Promise<AxiosResponse<SignUpResponse>['data']> =>
   axios({
     method: 'POST',
-    url: `${process.env.NEXT_PUBLIC_API_URL}/v1/accounts/sign-up`,
+    url: `http://localhost:5095/users/sign-up`,
     data,
-    withCredentials: true,
+    withCredentials: false,
   }).then(({ data }) => data)

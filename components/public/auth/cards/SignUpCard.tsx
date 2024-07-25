@@ -60,30 +60,8 @@ export const SignUpCard = () => {
             <Logo />
           </Link>
           <span className="font-medium text-gray-500">
-            {t('common:selectAccountType')}
+          Create new account for your organization
           </span>
-          <div className="flex gap-4 justify-evenly">
-            <button
-              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${asStudent ? 'bg-primary text-white hover:bg-primary-hover' : ''}`}
-              onClick={() => methods.setValue('asStudent', true)}
-            >
-              <PiStudentFill
-                size={40}
-                className={`${!asStudent ? 'text-primary' : 'text-white'}`}
-              />
-              {t('common:student')}
-            </button>
-            <button
-              className={`rounded  w-36 h-36 flex flex-col justify-center items-center font-bold gap-2  transition-colors  ${!asStudent ? 'bg-primary text-white hover:bg-primary-hover' : ''}`}
-              onClick={() => methods.setValue('asStudent', false)}
-            >
-              <VscOrganization
-                size={40}
-                className={`${asStudent ? 'text-primary' : 'text-white'}`}
-              />
-              {t('common:company')}
-            </button>
-          </div>
 
           <InputText
             name="email"
@@ -91,6 +69,14 @@ export const SignUpCard = () => {
             placeholder={t('common:email')}
             size="md"
             type="email"
+            required
+          />
+          <InputText
+            name="username"
+            label="Username"
+            placeholder="Username"
+            size="md"
+            type="text"
             required
           />
           <InputText
